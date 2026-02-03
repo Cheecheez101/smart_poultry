@@ -1,0 +1,340 @@
+/* SmartPoultry Management System - Custom Styles */
+
+:root {
+    --primary-color: #4e73df;
+    --secondary-color: #858796;
+    --success-color: #1cc88a;
+    --info-color: #36b9cc;
+    --warning-color: #f6c23e;
+    --danger-color: #e74a3b;
+    --light-color: #f8f9fc;
+    --dark-color: #5a5c69;
+}
+
+/* Body and Layout */
+body {
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f8f9fc;
+}
+
+.min-vh-100 {
+    min-height: 100vh !important;
+}
+
+/* Card Enhancements */
+.card {
+    border: none;
+    border-radius: 0.35rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.card-header {
+    background-color: #f8f9fc;
+    border-bottom: 1px solid #e3e6f0;
+}
+
+/* Border Left Cards */
+.border-left-primary {
+    border-left: 0.25rem solid var(--primary-color) !important;
+}
+
+.border-left-success {
+    border-left: 0.25rem solid var(--success-color) !important;
+}
+
+.border-left-info {
+    border-left: 0.25rem solid var(--info-color) !important;
+}
+
+.border-left-warning {
+    border-left: 0.25rem solid var(--warning-color) !important;
+}
+
+/* Navigation Enhancements */
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.75rem;
+}
+
+.nav-link {
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.nav-link:hover {
+    color: rgba(255, 255, 255, 1) !important;
+}
+
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 0.35rem;
+    font-weight: 400;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #2e59d9;
+    border-color: #2653d4;
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.btn-info {
+    background-color: var(--info-color);
+    border-color: var(--info-color);
+}
+
+.btn-warning {
+    background-color: var(--warning-color);
+    border-color: var(--warning-color);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+/* Forms */
+.form-control {
+    border: 1px solid #d1d3e2;
+    border-radius: 0.35rem;
+    color: #6e707e;
+}
+
+.form-control:focus {
+    border-color: #bac8f3;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+.input-group-text {
+    background-color: #e2e6ea;
+    border-color: #d1d3e2;
+    color: #858796;
+}
+
+/* Tables */
+.table {
+    color: #858796;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.1rem;
+    color: #5a5c69;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+/* Alerts */
+.alert {
+    border: none;
+    border-radius: 0.35rem;
+}
+
+.alert-sm {
+    padding: 0.375rem 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #0f5132;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #664d03;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.75rem;
+    font-weight: 400;
+    padding: 0.375rem 0.75rem;
+}
+
+/* Text Utilities */
+.text-xs {
+    font-size: 0.7rem;
+}
+
+.font-weight-bold {
+    font-weight: 700 !important;
+}
+
+.text-gray-800 {
+    color: #5a5c69 !important;
+}
+
+.text-gray-300 {
+    color: #dddfeb !important;
+}
+
+.text-uppercase {
+    text-transform: uppercase !important;
+    letter-spacing: 0.1rem;
+}
+
+/* Login Page Styles */
+.login-page {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Chart Containers */
+.chart-area {
+    position: relative;
+    height: 20rem;
+    width: 100%;
+}
+
+.chart-pie {
+    position: relative;
+    height: 15rem;
+    width: 100%;
+}
+
+/* Sidebar Styles (if needed) */
+.sidebar {
+    background-color: #fff;
+    border-right: 1px solid #e3e6f0;
+    min-height: 100vh;
+}
+
+.sidebar .nav-link {
+    color: #858796;
+    padding: 1rem;
+}
+
+.sidebar .nav-link:hover {
+    color: #5a5c69;
+    background-color: #eaecf4;
+}
+
+.sidebar .nav-link.active {
+    color: var(--primary-color);
+    background-color: #eaecf4;
+}
+
+/* Footer */
+footer {
+    background-color: #f8f9fc !important;
+    border-top: 1px solid #e3e6f0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+    
+    .h3, h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Loading Spinner */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Status Indicators */
+.status-active {
+    color: var(--success-color);
+}
+
+.status-inactive {
+    color: var(--secondary-color);
+}
+
+.status-warning {
+    color: var(--warning-color);
+}
+
+.status-danger {
+    color: var(--danger-color);
+}
+
+/* Dashboard Specific */
+.dashboard-stat {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #5a5c69;
+}
+
+.dashboard-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    color: #858796;
+}
+
+/* Utility Classes */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.border-0 {
+    border: none !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.shadow {
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+}
+
+/* Print Styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    .card {
+        border: 1px solid #dee2e6 !important;
+        box-shadow: none !important;
+    }
+}
