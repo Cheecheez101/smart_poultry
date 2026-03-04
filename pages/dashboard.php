@@ -43,7 +43,7 @@ try {
     
     // Recent activities (use system_logs table)
     $stmt = $pdo->query("
-        SELECT sl.*, u.username 
+        SELECT sl.*, u.username, sl.log_timestamp as created_at, sl.action as details
         FROM system_logs sl
         LEFT JOIN users u ON sl.user_id = u.id
         ORDER BY sl.log_timestamp DESC 
@@ -210,13 +210,13 @@ include '../includes/header.php';
                                 </div>
                                 <div>
                                     <div class="small text-muted">
-                                        <?php echo formatDate($activity['created_at'], 'M j, Y g:i A'); ?>
+                                        <?php echo isset($activity['created_at']) ? formatDate($activity['created_at'], 'M j, Y g:i A') : 'Unknown time'; ?>
                                     </div>
                                     <div>
-                                        <strong><?php echo htmlspecialchars($activity['username']); ?></strong>
-                                        <?php echo htmlspecialchars($activity['action']); ?>
+                                        <strong><?php echo htmlspecialchars($activity['username'] ?? 'System'); ?></strong>
+                                        <?php echo htmlspecialchars($activity['action'] ?? 'Unknown action'); ?>
                                     </div>
-                                    <?php if ($activity['details']): ?>
+                                    <?php if (!empty($activity['details'])): ?>
                                         <div class="small text-muted">
                                             <?php echo htmlspecialchars($activity['details']); ?>
                                         </div>
@@ -243,8 +243,8 @@ include '../includes/header.php';
                         </h6>
                         <?php foreach ($lowStockItems as $item): ?>
                             <div class="alert alert-warning alert-sm py-2" role="alert">
-                                <strong><?php echo htmlspecialchars($item['item_name']); ?></strong> 
-                                is running low (<?php echo $item['current_stock']; ?> remaining)
+                                <strong><?php echo htmlspecialchars($item['feed_type']); ?></strong> 
+                                is running low (<?php echo $item['quantity']; ?> kg remaining)
                             </div>
                         <?php endforeach; ?>
                         <hr>

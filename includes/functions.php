@@ -155,11 +155,11 @@ function getUpcomingEvents($days = 7) {
     // Vaccination reminders
     try {
         $stmt = $pdo->prepare("
-            SELECT 'vaccination' as type, f.batch_number as flock_name, m.medication_name, m.next_dose_date
-            FROM medication_schedule m
+            SELECT 'vaccination' as type, f.batch_number as flock_name, m.medication_name, m.next_due_date as next_dose_date
+            FROM medications m
             JOIN flocks f ON m.flock_id = f.id
-            WHERE m.next_dose_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL ? DAY)
-            AND m.status = 'active'
+            WHERE m.next_due_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL ? DAY)
+            AND m.next_due_date IS NOT NULL
         ");
         $stmt->execute([$days]);
         $events = array_merge($events, $stmt->fetchAll());

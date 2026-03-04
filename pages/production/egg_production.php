@@ -15,18 +15,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         try {
             $stmt = $pdo->prepare("
                 INSERT INTO egg_production 
-                (flock_id, production_date, eggs_collected, eggs_broken, eggs_sold, eggs_stored, average_weight, notes, recorded_by) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (flock_id, production_date, eggs_collected, eggs_broken, eggs_stored, average_weight, notes, recorded_by) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ");
             
-            $eggs_stored = $_POST['eggs_collected'] - $_POST['eggs_broken'] - $_POST['eggs_sold'];
+            $eggs_stored = $_POST['eggs_collected'] - $_POST['eggs_broken'];
             
             $stmt->execute([
                 $_POST['flock_id'],
                 $_POST['production_date'],
                 $_POST['eggs_collected'],
                 $_POST['eggs_broken'] ?? 0,
-                $_POST['eggs_sold'] ?? 0,
                 $eggs_stored,
                 $_POST['average_weight'] ?? null,
                 $_POST['notes'] ?? '',
@@ -103,7 +102,6 @@ $stmt = $pdo->prepare("
         COUNT(*) as total_records,
         SUM(eggs_collected) as total_collected,
         SUM(eggs_broken) as total_broken,
-        SUM(eggs_sold) as total_sold,
         SUM(eggs_stored) as total_stored,
         AVG(eggs_collected) as avg_daily_collection
     FROM egg_production
@@ -208,14 +206,14 @@ include '../../includes/header.php';
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Eggs Sold
+                                Eggs in Storage
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                <?php echo number_format($stats['total_sold'] ?? 0); ?>
+                                <?php echo number_format($stats['total_stored'] ?? 0); ?>
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
+                            <i class="fas fa-warehouse fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -285,7 +283,6 @@ include '../../includes/header.php';
                             <th>Breed</th>
                             <th>Collected</th>
                             <th>Broken</th>
-                            <th>Sold</th>
                             <th>Stored</th>
                             <th>Avg Weight (g)</th>
                             <th>Recorded By</th>
@@ -311,11 +308,10 @@ include '../../includes/header.php';
                                     </td>
                                     <td>
                                         <span class="badge bg-success">
-                                            <?php echo number_format($record['eggs_sold']); ?>
+                                            <?php echo number_format($record['eggs_stored']); ?>
                                         </span>
                                     </td>
-                                    <td><?php echo number_format($record['eggs_stored']); ?></td>
-                                    <td><?php echo $record['average_weight'] ? number_format($record['average_weight'], 1) : '-'; ?></td>
+                                    <td><?php echo isset($record['average_weight']) ? number_format($record['average_weight'], 1) : '-'; ?></td>
                                     <td><?php echo htmlspecialchars($record['recorded_by_name'] ?? 'Unknown'); ?></td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-info" 
@@ -382,19 +378,14 @@ include '../../includes/header.php';
                             <label for="eggs_broken" class="form-label">Eggs Broken</label>
                             <input type="number" class="form-control" id="eggs_broken" name="eggs_broken" 
                                    min="0" value="0">
+                            <small class="text-muted">Eggs will be stored = Collected - Broken</small>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="eggs_sold" class="form-label">Eggs Sold</label>
-                            <input type="number" class="form-control" id="eggs_sold" name="eggs_sold" 
-                                   min="0" value="0">
+                            <label for="average_weight" class="form-label">Average Weight (grams)</label>
+                            <input type="number" class="form-control" id="average_weight" name="average_weight" 
+                                   step="0.1" min="0">
                         </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="average_weight" class="form-label">Average Weight (grams)</label>
-                        <input type="number" class="form-control" id="average_weight" name="average_weight" 
-                               step="0.1" min="0">
                     </div>
 
                     <div class="mb-3">
@@ -456,10 +447,6 @@ function viewDetails(record) {
             <tr>
                 <th>Eggs Stored:</th>
                 <td>${record.eggs_stored}</td>
-            </tr>
-            <tr>
-                <th>Average Weight:</th>
-                <td>${record.average_weight ? record.average_weight + ' g' : 'N/A'}</td>
             </tr>
             <tr>
                 <th>Recorded By:</th>

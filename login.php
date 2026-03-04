@@ -52,7 +52,7 @@ $page_title = 'Login';
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="<?php echo APP_URL; ?>assets/css/style.css" rel="stylesheet">
 </head>
 <body class="bg-light">
     <div class="container">

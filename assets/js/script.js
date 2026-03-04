@@ -330,6 +330,45 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300000); // 5 minutes
     }
 
+    // Sidebar submenu toggle
+    const submenuItems = document.querySelectorAll('.nav-item.has-submenu');
+    submenuItems.forEach(item => {
+        const toggle = item.querySelector('.submenu-toggle');
+        const submenu = item.querySelector('.nav-submenu');
+        if (!toggle || !submenu) return;
+
+        toggle.addEventListener('click', function(event) {
+            event.preventDefault();
+            const isOpen = item.classList.contains('open');
+
+            submenuItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('open');
+                    const otherToggle = otherItem.querySelector('.submenu-toggle');
+                    if (otherToggle) {
+                        otherToggle.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            });
+
+            item.classList.toggle('open', !isOpen);
+            toggle.setAttribute('aria-expanded', (!isOpen).toString());
+        });
+    });
+
+    const topLevelLinks = document.querySelectorAll('.nav-item:not(.has-submenu) > .nav-link');
+    topLevelLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            submenuItems.forEach(item => {
+                item.classList.remove('open');
+                const toggle = item.querySelector('.submenu-toggle');
+                if (toggle) {
+                    toggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    });
+
     // Confirmation dialogs
     const confirmButtons = document.querySelectorAll('[data-confirm]');
     confirmButtons.forEach(button => {

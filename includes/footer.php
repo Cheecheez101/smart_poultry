@@ -18,6 +18,9 @@
 
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Global App Script -->
+    <script src="<?php echo APP_URL; ?>assets/js/script.js"></script>
     
     <!-- Custom JavaScript -->
     <script>
@@ -37,15 +40,21 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const footer = document.querySelector('footer');
-            
-            sidebar.classList.toggle('collapsed');
-            
-            // Adjust footer margin based on sidebar state
-            if (sidebar.classList.contains('collapsed')) {
+            const isMobile = window.innerWidth <= 768;
+
+            if (isMobile) {
+                sidebar.classList.toggle('mobile-open');
+                if (!sidebar.classList.contains('collapsed')) {
+                    sidebar.classList.add('collapsed');
+                }
                 footer.style.marginLeft = '70px';
-            } else {
-                footer.style.marginLeft = 'var(--sidebar-width)';
+                return;
             }
+
+            sidebar.classList.toggle('collapsed');
+
+            // Adjust footer margin based on sidebar state
+            footer.style.marginLeft = sidebar.classList.contains('collapsed') ? '70px' : 'var(--sidebar-width)';
         }
         
         // Auto-hide alerts after 5 seconds
@@ -68,6 +77,7 @@
             
             if (window.innerWidth <= 768) {
                 sidebar.classList.add('collapsed');
+                sidebar.classList.remove('mobile-open');
                 footer.style.marginLeft = '70px';
             } else {
                 footer.style.marginLeft = sidebar.classList.contains('collapsed') ? '70px' : 'var(--sidebar-width)';

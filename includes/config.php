@@ -6,10 +6,15 @@ define('DB_USER', 'root');  // Change this in production
 define('DB_PASS', '');      // Change this in production
 define('DB_CHARSET', 'utf8mb4');
 
-// Application configuration
+// Application configuration - Dynamic URL detection
+// Detect protocol
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'];
+
+// Build APP_URL dynamically - works with localhost, ngrok, and production
+define('APP_URL', $protocol . '://' . $host . '/smart_poultry/');
 define('APP_NAME', 'SmartPoultry Management System');
 define('APP_VERSION', '1.0.0');
-define('APP_URL', 'http://localhost/smart_poultry/');
 define('UPLOAD_DIR', __DIR__ . '/../uploads/');
 define('UPLOAD_URL', APP_URL . 'uploads/');
 

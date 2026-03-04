@@ -1,0 +1,5 @@
+# Disable directory listing
+Options -Indexes
+
+# Set default charset
+AddDefaultCharset utf-8

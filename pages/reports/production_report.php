@@ -173,9 +173,6 @@ include '../../includes/header.php';
             <h2><i class="bi bi-egg-fill"></i> Production Report</h2>
         </div>
         <div class="col-auto">
-            <button class="btn btn-success" onclick="window.print()">
-                <i class="bi bi-printer"></i> Print Report
-            </button>
             <button class="btn btn-primary" onclick="exportToCSV()">
                 <i class="bi bi-file-earmark-spreadsheet"></i> Export CSV
             </button>
@@ -554,9 +551,27 @@ function exportToCSV() {
 
 <style>
 @media print {
-    .btn, nav, .sidebar, .no-print {
+    .btn, nav, .sidebar, .top-navbar, .no-print {
         display: none !important;
     }
+
+    .main-content {
+        margin-left: 0 !important;
+    }
+
+    .wrapper {
+        display: block !important;
+    }
+
+    a[href]::after {
+        content: "" !important;
+    }
+
+    a[href] {
+        text-decoration: none !important;
+        color: inherit !important;
+    }
+
     .card {
         border: 1px solid #ddd !important;
         page-break-inside: avoid;

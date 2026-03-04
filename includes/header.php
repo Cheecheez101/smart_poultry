@@ -164,6 +164,11 @@ if ($current_user) {
             margin-left: 2rem;
             border-radius: 0.375rem;
             overflow: hidden;
+            display: none;
+        }
+
+        .nav-item.open > .nav-submenu {
+            display: block;
         }
         
         .sidebar.collapsed .nav-submenu {
@@ -448,6 +453,10 @@ if ($current_user) {
             .sidebar {
                 width: 70px;
             }
+
+            .sidebar.mobile-open {
+                width: var(--sidebar-width);
+            }
             
             .main-content {
                 margin-left: 70px;
@@ -458,14 +467,32 @@ if ($current_user) {
             .nav-submenu {
                 display: none;
             }
+
+            .sidebar.mobile-open .sidebar-header h4,
+            .sidebar.mobile-open .nav-link span {
+                display: inline;
+            }
+
+            .sidebar.mobile-open .nav-item.open > .nav-submenu {
+                display: block;
+            }
             
             .nav-link {
                 justify-content: center;
                 padding: 0.75rem;
             }
+
+            .sidebar.mobile-open .nav-link {
+                justify-content: flex-start;
+                padding: 0.75rem 1.25rem;
+            }
             
             .nav-link i {
                 margin-right: 0;
+            }
+
+            .sidebar.mobile-open .nav-link i {
+                margin-right: 0.75rem;
             }
         }
         
@@ -500,8 +527,8 @@ if ($current_user) {
                     </a>
                 </div>
                 
-                <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>pages/flocks/list_flocks.php" class="nav-link <?php echo in_array($current_page, ['list_flocks', 'add_flock', 'edit_flock']) ? 'active' : ''; ?>">
+                <div class="nav-item has-submenu <?php echo in_array($current_page, ['list_flocks', 'add_flock', 'edit_flock']) ? 'open' : ''; ?>">
+                    <a href="<?php echo APP_URL; ?>pages/flocks/list_flocks.php" class="nav-link submenu-toggle <?php echo in_array($current_page, ['list_flocks', 'add_flock', 'edit_flock']) ? 'active' : ''; ?>" aria-expanded="<?php echo in_array($current_page, ['list_flocks', 'add_flock', 'edit_flock']) ? 'true' : 'false'; ?>">
                         <i class="fas fa-dove"></i>
                         <span>Flocks Management</span>
                     </a>
@@ -537,7 +564,7 @@ if ($current_user) {
                 </div>
                 
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>pages/sales/sales.php" class="nav-link <?php echo in_array($current_page, ['sales', 'add_sale']) ? 'active' : ''; ?>">
+                    <a href="<?php echo APP_URL; ?>pages/sales/sales_new.php" class="nav-link <?php echo in_array($current_page, ['sales', 'add_sale']) ? 'active' : ''; ?>">
                         <i class="fas fa-cash-register"></i>
                         <span>Sales Management</span>
                     </a>
@@ -550,8 +577,8 @@ if ($current_user) {
                     </a>
                 </div>
                 
-                <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>pages/reports/reports.php" class="nav-link <?php echo $current_page == 'reports' ? 'active' : ''; ?>">
+                <div class="nav-item has-submenu <?php echo in_array($current_page, ['reports', 'production_report', 'financial_report', 'inventory_report']) ? 'open' : ''; ?>">
+                    <a href="<?php echo APP_URL; ?>pages/reports/reports.php" class="nav-link submenu-toggle <?php echo in_array($current_page, ['reports', 'production_report', 'financial_report', 'inventory_report']) ? 'active' : ''; ?>" aria-expanded="<?php echo in_array($current_page, ['reports', 'production_report', 'financial_report', 'inventory_report']) ? 'true' : 'false'; ?>">
                         <i class="fas fa-chart-bar"></i>
                         <span>Reports & Analytics</span>
                     </a>
@@ -573,6 +600,13 @@ if ($current_user) {
                     <a href="<?php echo APP_URL; ?>admin/users.php" class="nav-link <?php echo $current_page == 'users' ? 'active' : ''; ?>">
                         <i class="fas fa-users"></i>
                         <span>User Management</span>
+                    </a>
+                </div>
+                
+                <div class="nav-item">
+                    <a href="<?php echo APP_URL; ?>admin/pricing.php" class="nav-link <?php echo $current_page == 'pricing' ? 'active' : ''; ?>">
+                        <i class="fas fa-tags"></i>
+                        <span>Pricing Management</span>
                     </a>
                 </div>
                 
@@ -672,6 +706,16 @@ if ($current_user) {
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
+            const isMobile = window.innerWidth <= 768;
+
+            if (isMobile) {
+                sidebar.classList.toggle('mobile-open');
+                if (!sidebar.classList.contains('collapsed')) {
+                    sidebar.classList.add('collapsed');
+                }
+                return;
+            }
+
             sidebar.classList.toggle('collapsed');
         }
         

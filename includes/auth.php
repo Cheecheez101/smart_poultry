@@ -116,6 +116,19 @@ class Auth {
         $user_role = $_SESSION['role'];
         $role_hierarchy = ['worker' => 1, 'manager' => 2, 'admin' => 3];
         
+        // Handle array of roles (user needs to have at least one)
+        if (is_array($required_role)) {
+            foreach ($required_role as $role) {
+                if (isset($role_hierarchy[$user_role]) && 
+                    isset($role_hierarchy[$role]) && 
+                    $role_hierarchy[$user_role] >= $role_hierarchy[$role]) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        // Handle single role
         return isset($role_hierarchy[$user_role]) && 
                isset($role_hierarchy[$required_role]) && 
                $role_hierarchy[$user_role] >= $role_hierarchy[$required_role];
